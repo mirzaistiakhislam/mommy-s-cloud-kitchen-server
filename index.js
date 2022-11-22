@@ -18,6 +18,13 @@ async function run() {
         const serviceCollection = client.db('mommyCloudKitchen').collection('services');
         const reviewCollection = client.db('mommyCloudKitchen').collection('reviews');
 
+        app.get('/serviceslimit', async (req, res) => {
+            const query = {}
+            const cursor = serviceCollection.find(query);
+            const services = await cursor.limit(3).toArray();
+            res.send(services);
+        });
+
         app.get('/services', async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query);
